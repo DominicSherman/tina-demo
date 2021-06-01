@@ -1,0 +1,29 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Push to production
+    runs-on: ubuntu-latest
+    env:
+      DEV_BRANCH: development
+      PROD_BRANCH: production
+    steps:
+      - name: Configure git credentials
+        uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          global: true
+          actor: ${{ github.actor }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout dev branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.DEV_BRANCH }}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.PROD_BRANCH }}
+          force: true
