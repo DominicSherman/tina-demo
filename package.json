@@ -30,6 +30,7 @@
     "react-dom": "17.0.1",
     "react-hook-form": "^6.15.4",
     "react-tinacms-github": "^0.41.0",
+    "react-tinacms-inline": "^0.41.0",
     "react-toast-notifications": "^2.4.3",
     "styled-components": "^5.3.0",
     "stylelint-config-recommended": "^4.0.0",

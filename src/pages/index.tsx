@@ -1,18 +1,34 @@
 import { getGithubPreviewProps, parseJson } from 'next-tinacms-github';
 import { GetStaticProps } from 'next';
+import { usePlugin } from 'tinacms';
+import { InlineForm, InlineText } from 'react-tinacms-inline';
+import {
+  useGithubJsonForm,
+  useGithubToolbarPlugins,
+} from 'react-tinacms-github';
 
 import { NavBar } from 'components';
 
 export default function Home({ file }) {
-  console.log({ file });
-  const data = file.data;
+  const formOptions = {
+    label: 'Home Page',
+    fields: [{ name: 'title', component: 'text' }],
+  };
+
+  const [data, form] = useGithubJsonForm(file, formOptions);
+  usePlugin(form);
+
+  useGithubToolbarPlugins();
+
   return (
-    <div className="w-screen h-screen flex flex-col">
-      <NavBar />
-      <div className="h-screen flex flex-col justify-center items-center w-full">
-        <h1 className="text-3xl font-semibold ml-7">{data.title}</h1>
+    <InlineForm form={form}>
+      <div className="w-screen h-screen flex flex-col">
+        <NavBar />
+        <div className="h-screen flex flex-col justify-center items-center w-full">
+          <InlineText className="text-3xl font-semibold ml-7" name="title" />
+        </div>
       </div>
-    </div>
+    </InlineForm>
   );
 }
 
